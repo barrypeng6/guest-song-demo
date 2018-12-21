@@ -1,4 +1,5 @@
 import React from "react";
+import Head from "next/head";
 import { Auth } from "@kkbox/kkbox-js-sdk";
 import FetchGame from "../components/FetchGame";
 import Game from "../components/Game";
@@ -23,9 +24,17 @@ export default class extends React.Component {
   }
   render() {
     return (
-      <FetchGame {...this.props}>
-        {props => (props.game ? <Game {...props} /> : <div>Loading...</div>)}
-      </FetchGame>
+      <>
+        <Head>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+        </Head>
+        <FetchGame {...this.props}>
+          {props => (props.game ? <Game {...props} /> : <div>Loading...</div>)}
+        </FetchGame>
+      </>
     );
   }
 }
