@@ -1,6 +1,5 @@
 import React from "react";
-import getGameData from "../getGameData";
-import Timer from "../components/Timer";
+import getGames from "../getGames";
 
 // 計分模組
 const getScore = time => {
@@ -14,53 +13,87 @@ const getScore = time => {
 
 export default class extends React.Component {
   state = {
+    time: 30,
+    isReady: false,
     score: 0,
     level: 0,
-    games: []
+    games: [],
+    tip: {
+      title: 'Ready?',
+      content: 'Press start button.',
+    }
   };
 
   async componentDidMount() {
     // Fetch first level
     const { access_token } = this.props;
-    const { games, level } = this.state;
-    const game = await getGameData({ access_token, singer: "周杰倫", level });
-    this.setState({ games: games.concat(game) });
+    const games = await getGames({ access_token, singer: "周杰倫" });
+    this.setState({ games });
+
+    // Detect clicking in iframe
+    window.addEventListener("blur", () => {
+      if (this.tmr) clearInterval(this.tmr);
+      this.tmr = setInterval(() => {
+        const { handleAnswer } = this.props;
+        const { time } = this.state;
+        if (time < 1) {
+          this.setState({ time: 30 });
+          this.handleAnswer();
+        } else {
+          this.setState({ isReady: true, time: time - 1 });
+        }
+      }, 1000);
+    });
+
+    // window.addEventListener("focus", () => {
+    //   if (this.tmr) clearInterval(this.tmr);
+    // });
   }
 
-  handleAnswer = async (id, time) => {
+  componentWillUnmount() {
+    if (this.tmr) clearInterval(this.tmr);
+  }
+
+  handleAnswer = async id => {
     console.log("ID >>>", id);
+    if (this.tmr) clearInterval(this.tmr);
+    window.focus();
+
     const { access_token } = this.props;
-    const { score, games, level } = this.state;
+    const { time, score, games, level } = this.state;
     const currentGame = games[level];
-    let newScore;
+    let newScore, content;
     if (id === currentGame.answer) {
       const earn = getScore(time);
-      alert(`Correct! Get ${earn} points.`);
+      content = `Correct! Get ${earn} points.`;
       newScore = score + earn;
     } else {
       const correctOpt = currentGame.options.find(
         opt => opt.id === currentGame.answer
       );
-      alert(`Wrong answer. Answer is ${correctOpt.name}`);
+      content = `Wrong answer. Answer is ${correctOpt.name}`;
       newScore = score;
     }
-    const game = await getGameData({ access_token, singer: "周杰倫", level });
+
     this.setState({
+      isReady: false,
+      time: 30,
       level: level + 1,
       score: newScore,
-      games: games.concat(game)
+      tip: {
+        title: 'Result',
+        content,
+      },
     });
   };
   render() {
-    const { score, games, level } = this.state;
+    const { time, isReady, tip, score, games, level } = this.state;
     const { children } = this.props;
 
     if (level > 4) return <div>{`Final Score: ${score}`}</div>;
     return (
       <div>
-        <div>{`Score: ${score}`}</div>
-        <div>{`Level: ${level}`}</div>
-        {children({ game: games[level], handleAnswer: this.handleAnswer })}
+        {children({ time, isReady, tip, score, level, game: games[level], handleAnswer: this.handleAnswer })}
       </div>
     );
   }

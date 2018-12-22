@@ -30,10 +30,28 @@ export default class extends React.Component {
             name="viewport"
             content="width=device-width, initial-scale=1.0"
           />
+          <link
+            href="https://fonts.googleapis.com/css?family=Noto+Sans+TC"
+            rel="stylesheet"
+          />
         </Head>
-        <FetchGame {...this.props}>
-          {props => (props.game ? <Game {...props} /> : <div>Loading...</div>)}
-        </FetchGame>
+        <FetchGame {...this.props}>{props => <Game {...props} />}</FetchGame>
+        <style global jsx>{`
+          * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+          }
+          html {
+            height: 100%;
+            color: white;
+            font-family: "Noto Sans TC", sans-serif;
+          }
+          body {
+            height: 100%;
+            background: black;
+          }
+        `}</style>
       </>
     );
   }
