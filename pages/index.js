@@ -44,12 +44,10 @@ export default class extends React.Component {
           }
           html {
             height: 100%;
-            color: white;
             font-family: "Noto Sans TC", sans-serif;
           }
           body {
             height: 100%;
-            background: black;
           }
         `}</style>
       </>

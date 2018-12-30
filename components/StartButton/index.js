@@ -1,62 +1,65 @@
 import React from "react";
 
 export default ({ tip, isReady, answer }) => (
-  <div className="dialog" style={{ top: isReady ? -300 : 50 }}>
-    {/* 顯示標題 */}
-    <div className="title">{tip.title}</div>
+  <div className="dialog" style={{ height: isReady ? 300 : 750 }}>
     {/* 顯示內容文字 */}
     <div className="content">{tip.content}</div>
     {/* 開始鍵 */}
-    <div className="button-wrapper">
-      <div className="fake-btn">Start</div>
+    <div className="button-wrapper" style={{ bottom: isReady ? 100 : 400 }}>
+    <div className="start-button">
+      <div className="fake-btn">開始</div>
       <iframe
         src={`https://widget.kkbox.com/v1/?id=${answer}&type=song&terr=TW&lang=TC`}
         height="100"
         frameBorder="0"
       />
     </div>
+    </div>
     <style jsx>{`
       div.dialog {
-        position: relative;
-        height: 240px;
-        width: 240px;
-        margin: 0 auto;
-        background-color: black;
-        border-radius: 5px;
-        border: 1px solid white;
-        transition: all 2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-      }
-      div.title {
-        padding: 10px 30px;
-        font-size: 20px;
-        text-align: center;
+        position: absolute;
+        bottom: -300px;
+        left: 0;
+        width: 100%;
+        max-width: 375px;
+        background-color: blue;
+        border-radius: 30px;
+        transition: all 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
       }
       div.content {
+        position: relative;
+        top: 100px;
+        text-align: center;
+        font-size: 24px;
         height: 120px;
         width: 100%;
         padding: 10px 30px;
       }
       div.button-wrapper {
+        position: absolute;
+        padding: 0 30px;
+        width: 100%;
+        transition: all 1s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      }
+      div.start-button {
         position: relative;
-        border: 1px solid black;
-        height: 50px;
-        width: 150px;
+        height: 60px;
+        width: 100%;
         overflow: hidden;
-        margin: 0 auto;
+        border-radius: 157.5px;
       }
       div.fake-btn {
-        height: 50px;
-        width: 150px;
-        line-height: 50px;
+        height: 60px;
+        width: 100%;
+        line-height: 60px;
         text-align: center;
         background-color: red;
-        border-radius: 5px;
       }
       iframe {
         position: absolute;
-        top: -815px;
-        left: -1120px;
-        transform: scale(10);
+        top: -1150px;
+        left: -1630px;
+        transform: scale(15);
         transform-origin: 0 0;
         opacity: 0.2;
       }

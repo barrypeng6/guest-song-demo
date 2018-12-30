@@ -7,7 +7,8 @@ export default ({ children }) => (
       div.container {
         display: flex;
         justify-content: center;
-        background-color: black;
+        background-color: grey;
+        height: 100vh;
       }
       div.wrapper {
         margin-top: 20px;

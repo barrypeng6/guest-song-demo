@@ -13,14 +13,13 @@ const getScore = time => {
 
 export default class extends React.Component {
   state = {
-    time: 30,
+    time: 31,
     isReady: false,
     score: 0,
     level: 0,
     games: [],
     tip: {
-      title: 'Ready?',
-      content: 'Press start button.',
+      content: "準備好了嗎？"
     }
   };
 
@@ -32,17 +31,19 @@ export default class extends React.Component {
 
     // Detect clicking in iframe
     window.addEventListener("blur", () => {
-      if (this.tmr) clearInterval(this.tmr);
-      this.tmr = setInterval(() => {
-        const { handleAnswer } = this.props;
-        const { time } = this.state;
-        if (time < 1) {
-          this.setState({ time: 30 });
-          this.handleAnswer();
-        } else {
-          this.setState({ isReady: true, time: time - 1 });
-        }
-      }, 1000);
+      if (document.activeElement instanceof HTMLIFrameElement) {
+        if (this.tmr) clearInterval(this.tmr);
+        this.tmr = setInterval(() => {
+          const { handleAnswer } = this.props;
+          const { time } = this.state;
+          if (time < 1) {
+            this.setState({ time: 31 });
+            this.handleAnswer();
+          } else {
+            this.setState({ isReady: true, time: time - 1 });
+          }
+        }, 1000);
+      }
     });
 
     // window.addEventListener("focus", () => {
@@ -77,13 +78,13 @@ export default class extends React.Component {
 
     this.setState({
       isReady: false,
-      time: 30,
+      time: 31,
       level: level + 1,
       score: newScore,
       tip: {
-        title: 'Result',
-        content,
-      },
+        title: "Result",
+        content
+      }
     });
   };
   render() {
@@ -93,7 +94,15 @@ export default class extends React.Component {
     if (level > 4) return <div>{`Final Score: ${score}`}</div>;
     return (
       <div>
-        {children({ time, isReady, tip, score, level, game: games[level], handleAnswer: this.handleAnswer })}
+        {children({
+          time,
+          isReady,
+          tip,
+          score,
+          level,
+          game: games[level],
+          handleAnswer: this.handleAnswer
+        })}
       </div>
     );
   }

@@ -18,7 +18,7 @@ export default class extends React.PureComponent {
     const { title, answer, options } = game || {};
 
     return (
-      <>
+      <div className="wrapper">
         <StartButton isReady={isReady} tip={tip} answer={answer} />
         {isReady && (
           <Layout>
@@ -35,7 +35,16 @@ export default class extends React.PureComponent {
             </section>
           </Layout>
         )}
-      </>
+        <style jsx>{`
+          div.wrapper {
+            height: 100vh;
+            max-width: 375px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+          }
+        `}</style>
+      </div>
     );
   }
 }
