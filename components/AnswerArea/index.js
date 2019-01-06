@@ -4,7 +4,7 @@ export default class extends React.PureComponent {
   render() {
     const { options, handleClickAnswer } = this.props;
     return (
-      <div>
+      <div className="option-wrapper">
         {options.map(({ id, name }) => (
           <div
             key={id}
@@ -19,21 +19,25 @@ export default class extends React.PureComponent {
         <style jsx>{`
           div.select-opt {
             display: block;
-            margin: 5px 10px;
             color: white;
             text-align: center;
-            background-color: gray;
-            border-radius: 2px;
+            background-color: #00a6ff;
+            border-radius: 30px;
+            height: 60px;
+            width: 100%;
+            line-height: 60px;
             cursor: pointer;
+            font-size: 24px;
           }
           div.select-opt:hover {
-            background-color: #999;
+            background-color: #017bbd;
           }
-          div {
+          div.option-wrapper {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
+            padding: 30px;
+            height: 100%;
             flex-direction: column;
-            margin-top: 10px;
           }
         `}</style>
       </div>

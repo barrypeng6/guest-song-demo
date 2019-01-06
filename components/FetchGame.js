@@ -18,9 +18,7 @@ export default class extends React.Component {
     score: 0,
     level: 0,
     games: [],
-    tip: {
-      content: "準備好了嗎？"
-    }
+    content: "準備好了嗎？",
   };
 
   async componentDidMount() {
@@ -56,7 +54,6 @@ export default class extends React.Component {
   }
 
   handleAnswer = async id => {
-    console.log("ID >>>", id);
     if (this.tmr) clearInterval(this.tmr);
     window.focus();
 
@@ -66,13 +63,13 @@ export default class extends React.Component {
     let newScore, content;
     if (id === currentGame.answer) {
       const earn = getScore(time);
-      content = `Correct! Get ${earn} points.`;
+      content = `答對了！獲得${earn}分。`;
       newScore = score + earn;
     } else {
       const correctOpt = currentGame.options.find(
         opt => opt.id === currentGame.answer
       );
-      content = `Wrong answer. Answer is ${correctOpt.name}`;
+      content = `答錯了！答案是 ${correctOpt.name}。`;
       newScore = score;
     }
 
@@ -81,14 +78,11 @@ export default class extends React.Component {
       time: 31,
       level: level + 1,
       score: newScore,
-      tip: {
-        title: "Result",
-        content
-      }
+      content,
     });
   };
   render() {
-    const { time, isReady, tip, score, games, level } = this.state;
+    const { time, isReady, content, score, games, level } = this.state;
     const { children } = this.props;
 
     if (level > 4) return <div>{`Final Score: ${score}`}</div>;
@@ -97,7 +91,7 @@ export default class extends React.Component {
         {children({
           time,
           isReady,
-          tip,
+          content,
           score,
           level,
           game: games[level],

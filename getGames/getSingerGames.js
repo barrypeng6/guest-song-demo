@@ -31,7 +31,7 @@ export default async ({ api, singer }) => {
       const answerNum = getAnswerNum();
 
       return {
-        title: `What is this song?`,
+        title: `這是哪一首歌？`,
         type: "WHAT_IS_THIS_SONG",
         options: randomTracks,
         answer: randomTracks[answerNum].id
