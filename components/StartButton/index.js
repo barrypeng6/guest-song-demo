@@ -66,7 +66,7 @@ export default ({ content, isReady, answer }) => (
         left: -1630px;
         transform: scale(15);
         transform-origin: 0 0;
-        opacity: 0.3;
+        opacity: 0.001;
       }
     `}</style>
   </div>

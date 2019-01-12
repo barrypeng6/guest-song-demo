@@ -20,7 +20,7 @@ export default class extends React.PureComponent {
       game,
       handleAnswer
     } = this.props;
-    if (!game) return <div>Loading ...</div>;
+    if (!game) return <Layout>Loading ...</Layout>;
     const { title, answer, options } = game || {};
 
     return (

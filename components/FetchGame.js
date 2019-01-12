@@ -1,5 +1,6 @@
 import React from "react";
 import getGames from "../getGames";
+import Result from './Result';
 
 // 計分模組
 const getScore = time => {
@@ -85,7 +86,7 @@ export default class extends React.Component {
     const { time, isReady, content, score, games, level } = this.state;
     const { children } = this.props;
 
-    if (level > 4) return <div>{`Final Score: ${score}`}</div>;
+    if (level > 4) return <Result score={score} />;
     return (
       <div>
         {children({
