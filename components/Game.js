@@ -73,7 +73,7 @@ const Bar = ({ score, level }) => (
     <div className="level-wrapper">
       LEVEL
       <br />
-      {level}
+      {level + 1}
     </div>
     <div className="score-wrapper">
       <div className="avatar" />
